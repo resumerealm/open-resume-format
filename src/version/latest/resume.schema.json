@@ -1,0 +1,905 @@
+{
+    "type": "object",
+    "title": "Resume",
+    "description": "Open Resume Format (ORF) schema",
+    "properties": {
+        "version": {
+            "type": "string",
+            "description": "The version of resume schema in format of date (YYYY-MM-DD)",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "professionalSummary": {
+            "type": [
+                "null",
+                "string"
+            ],
+            "description": "A short summary of the applicant's career goals and achievements",
+            "default": null,
+            "title": "Professional summary",
+            "maxLength": 1500
+        },
+        "dataProcessingPermission": {
+            "type": [
+                "null",
+                "string"
+            ],
+            "default": null,
+            "maxLength": 1500,
+            "title": "Data processing permission",
+            "description": "A statement that the applicant gives permission to process their data"
+        },
+        "personalInformation": {
+            "$ref": "#/definitions/PersonalInformation",
+            "description": "Personal information of the applicant",
+            "title": "Personal information"
+        },
+        "experience": {
+            "type": "array",
+            "description": "List of work experiences",
+            "title": "Experience",
+            "default": [],
+            "items": {
+                "$ref": "#/definitions/Experience"
+            },
+            "maxItems": 25
+        },
+        "education": {
+            "type": "array",
+            "description": "List of educational experiences",
+            "title": "Education",
+            "default": [],
+            "items": {
+                "$ref": "#/definitions/Education"
+            },
+            "maxItems": 10
+        },
+        "certifications": {
+            "type": "array",
+            "description": "List of certifications",
+            "title": "Certifications",
+            "default": [],
+            "items": {
+                "$ref": "#/definitions/Certification"
+            },
+            "maxItems": 10
+        },
+        "projects": {
+            "type": "array",
+            "description": "List of projects",
+            "title": "Projects",
+            "default": [],
+            "items": {
+                "$ref": "#/definitions/Project"
+            },
+            "maxItems": 15
+        },
+        "languages": {
+            "type": "array",
+            "description": "List of languages",
+            "title": "Languages",
+            "default": [],
+            "items": {
+                "$ref": "#/definitions/Skill"
+            },
+            "maxItems": 15
+        },
+        "skills": {
+            "type": "array",
+            "description": "List of skills",
+            "title": "Skills",
+            "default": [],
+            "items": {
+                "$ref": "#/definitions/Skill"
+            },
+            "maxItems": 30
+        },
+        "awardsAndHonors": {
+            "type": "array",
+            "default": [],
+            "description": "List of awards and honors",
+            "title": "Awards and honors",
+            "items": {
+                "$ref": "#/definitions/AwardAndHonor"
+            },
+            "maxItems": 20
+        },
+        "volunteerExperience": {
+            "type": "array",
+            "default": [],
+            "description": "List of volunteer experiences",
+            "title": "Volunteer experience",
+            "items": {
+                "$ref": "#/definitions/VolunteerExperience"
+            },
+            "maxItems": 20
+        },
+        "references": {
+            "type": "array",
+            "default": [],
+            "description": "List of references",
+            "title": "References",
+            "items": {
+                "$ref": "#/definitions/Reference"
+            },
+            "maxItems": 25
+        },
+        "attributes": {
+            "description": "Additional attributes of the resume, used also for custom plugins configuration",
+            "type": "object"
+        }
+    },
+    "required": [
+        "attributes",
+        "awardsAndHonors",
+        "certifications",
+        "dataProcessingPermission",
+        "education",
+        "experience",
+        "languages",
+        "personalInformation",
+        "professionalSummary",
+        "projects",
+        "references",
+        "skills",
+        "version",
+        "volunteerExperience"
+    ],
+    "definitions": {
+        "PersonalInformation": {
+            "type": "object",
+            "properties": {
+                "links": {
+                    "type": "array",
+                    "description": "Links to social profiles, etc.",
+                    "items": {
+                        "$ref": "#/definitions/Link"
+                    },
+                    "default": [],
+                    "maxItems": 5
+                },
+                "image": {
+                    "description": "Image of the applicant",
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/Image"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "fullName": {
+                    "type": "string",
+                    "description": "Full name of the applicant",
+                    "maxLength": 100
+                },
+                "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "Email address",
+                    "maxLength": 120
+                },
+                "phoneNumber": {
+                    "description": "Phone number in international format",
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "default": null,
+                    "maxLength": 30
+                },
+                "address": {
+                    "description": "Address, city, country, etc.",
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "default": null,
+                    "maxLength": 150
+                },
+                "interests": {
+                    "description": "Interests, hobbies, etc.",
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "default": null,
+                    "maxLength": 1000
+                }
+            },
+            "required": [
+                "address",
+                "email",
+                "fullName",
+                "image",
+                "interests",
+                "phoneNumber"
+            ]
+        },
+        "Image": {
+            "type": "object",
+            "description": "Image. Used for personal information, experience, etc. URL may be also a base64 encoded image",
+            "properties": {
+                "url": {
+                    "description": "URL or base64 of the image",
+                    "type": "string",
+                    "format": "uri",
+                    "maxLength": 100000
+                },
+                "alt": {
+                    "description": "Alternative text for the image",
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "default": null,
+                    "maxLength": 100
+                },
+                "width": {
+                    "title": "Width in pixels",
+                    "description": "Width of the image in pixels",
+                    "type": "number",
+                    "default": 0,
+                    "minimum": 0,
+                    "maximum": 250
+                },
+                "height": {
+                    "title": "Height in pixels",
+                    "description": "Height of the image in pixels",
+                    "type": "number",
+                    "default": 0,
+                    "minimum": 0,
+                    "maximum": 350
+                }
+            },
+            "required": [
+                "url"
+            ]
+        },
+        "Link": {
+            "type": "object",
+            "properties": {
+                "url": {
+                    "type": "string",
+                    "maxLength": 500
+                },
+                "title": {
+                    "type": "string",
+                    "maxLength": 100
+                }
+            },
+            "required": [
+                "title",
+                "url"
+            ]
+        },
+        "Experience": {
+            "type": "object",
+            "description": "Work experience",
+            "properties": {
+                "image": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/Image"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "jobTitle": {
+                    "type": "string",
+                    "description": "Job title",
+                    "maxLength": 150
+                },
+                "organization": {
+                    "description": "Organization",
+                    "$ref": "#/definitions/Organization"
+                },
+                "location": {
+                    "type": "string",
+                    "description": "Location of the job",
+                    "title": "Location",
+                    "maxLength": 150
+                },
+                "startDate": {
+                    "type": "string",
+                    "description": "Start date of the job",
+                    "title": "Start date",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                },
+                "endDate": {
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "default": null,
+                    "description": "End date of the job",
+                    "title": "End date",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                },
+                "description": {
+                    "description": "Description of the job",
+                    "type": "string",
+                    "maxLength": 1500
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "maxLength": 100,
+                        "minLength": 2
+                    },
+                    "maxItems": 25
+                }
+            },
+            "required": [
+                "description",
+                "endDate",
+                "image",
+                "jobTitle",
+                "location",
+                "organization",
+                "startDate",
+                "tags"
+            ]
+        },
+        "Organization": {
+            "type": "object",
+            "description": "Organization",
+            "title": "Organization",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of the organization",
+                    "title": "Organization name",
+                    "maxLength": 150
+                },
+                "url": {
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "default": null,
+                    "format": "uri",
+                    "maxLength": 500
+                },
+                "image": {
+                    "description": "Logo of the organization",
+                    "title": "Organization logo",
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/Image"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null
+                }
+            },
+            "required": [
+                "image",
+                "name",
+                "url"
+            ]
+        },
+        "Education": {
+            "type": "object",
+            "properties": {
+                "image": {
+                    "description": "Logo of the school or university",
+                    "title": "School logo",
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/Image"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null
+                },
+                "degree": {
+                    "type": "string",
+                    "description": "Degree",
+                    "title": "Degree",
+                    "enum": [
+                        "Associate",
+                        "Bachelor",
+                        "Master",
+                        "Doctorate",
+                        "Postdoc",
+                        null
+                    ],
+                    "default": null
+                },
+                "major": {
+                    "type": "string",
+                    "description": "Major",
+                    "title": "Major",
+                    "default": null,
+                    "maxLength": 300
+                },
+                "institution": {
+                    "type": "string",
+                    "description": "Name of the institution",
+                    "title": "Institution",
+                    "maxLength": 150
+                },
+                "startDate": {
+                    "type": "string",
+                    "description": "Start date of the education",
+                    "title": "Start date",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                },
+                "endDate": {
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                    "default": null,
+                    "description": "End date of the education",
+                    "title": "End date"
+                },
+                "gpa": {
+                    "type": [
+                        "null",
+                        "number"
+                    ],
+                    "default": null,
+                    "description": "Grade point average",
+                    "title": "GPA"
+                },
+                "finished": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Whether the education is finished",
+                    "title": "Finished"
+                }
+            },
+            "required": [
+                "degree",
+                "endDate",
+                "finished",
+                "gpa",
+                "image",
+                "institution",
+                "major",
+                "startDate"
+            ]
+        },
+        "Certification": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of the certification",
+                    "title": "Certification name",
+                    "maxLength": 150
+                },
+                "issuer": {
+                    "description": "Organization that issued the certification",
+                    "title": "Certification issuer",
+                    "$ref": "#/definitions/Organization"
+                },
+                "dateReceived": {
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "default": null,
+                    "description": "Date the certification was received",
+                    "title": "Date received"
+                },
+                "validUntil": {
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                    "default": null,
+                    "description": "Date the certification is valid until",
+                    "title": "Valid until"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "maxLength": 100,
+                        "minLength": 2
+                    },
+                    "default": [],
+                    "maxItems": 25
+                }
+            },
+            "required": [
+                "dateReceived",
+                "issuer",
+                "name",
+                "tags",
+                "validUntil"
+            ]
+        },
+        "Project": {
+            "type": "object",
+            "properties": {
+                "image": {
+                    "description": "Image of the project",
+                    "title": "Project image",
+                    "default": null,
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/Image"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "organization": {
+                    "description": "Organization that the project belongs to",
+                    "title": "Organization where the project was done",
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/Organization"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null
+                },
+                "projectName": {
+                    "type": "string",
+                    "description": "Name of the project",
+                    "title": "Project name",
+                    "maxLength": 150
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ],
+                    "description": "Description of the project",
+                    "title": "Project description",
+                    "default": null,
+                    "maxLength": 1500
+                },
+                "startDate": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                    "description": "Start date of the project",
+                    "title": "Start date"
+                },
+                "endDate": {
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                    "default": null,
+                    "description": "End date of the project",
+                    "title": "End date"
+                },
+                "projectLink": {
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "format": "uri",
+                    "default": null,
+                    "description": "Link to the project",
+                    "title": "Project link",
+                    "maxLength": 500
+                },
+                "tags": {
+                    "type": "array",
+                    "default": [],
+                    "description": "Tags for the project",
+                    "title": "Project tags",
+                    "items": {
+                        "type": "string",
+                        "maxLength": 100,
+                        "minLength": 2
+                    },
+                    "maxItems": 25
+                }
+            },
+            "required": [
+                "description",
+                "endDate",
+                "image",
+                "organization",
+                "projectLink",
+                "projectName",
+                "startDate",
+                "tags"
+            ]
+        },
+        "Skill": {
+            "type": "object",
+            "description": "Skill that the person has",
+            "title": "Skill",
+            "properties": {
+                "type": {
+                    "description": "Type of the skill",
+                    "title": "Skill type",
+                    "type": "string",
+                    "enum": [
+                        "Language",
+                        "Framework",
+                        "Library",
+                        "Database",
+                        "Platform",
+                        "Other"
+                    ]
+                },
+                "name": {
+                    "description": "Name of the skill",
+                    "title": "Skill name",
+                    "type": "string",
+                    "maxLength": 150
+                },
+                "proficiency": {
+                    "description": "Proficiency of the skill expressed as a number between 0 and 100",
+                    "title": "Skill proficiency",
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "default": 0
+                }
+            },
+            "required": [
+                "name",
+                "type",
+                "proficiency"
+            ]
+        },
+        "AwardAndHonor": {
+            "type": "object",
+            "description": "Award or honor that the person has received",
+            "title": "Award or honor",
+            "properties": {
+                "awardName": {
+                    "description": "Name of the award or honor",
+                    "title": "Award or honor name",
+                    "type": "string",
+                    "maxLength": 150
+                },
+                "image": {
+                    "description": "Image of the award or honor",
+                    "title": "Award or honor image",
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/Image"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "organization": {
+                    "description": "Organization that issued the award or honor",
+                    "title": "Award or honor issuer",
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/Organization"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null
+                },
+                "dateReceived": {
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                    "default": null,
+                    "description": "Date the award or honor was received",
+                    "title": "Date received"
+                },
+                "description": {
+                    "description": "Description of the award or honor",
+                    "title": "Award or honor description",
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "default": null,
+                    "maxLength": 1500
+                },
+                "tags": {
+                    "description": "Tags for the award or honor",
+                    "title": "Award or honor tags",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "maxLength": 100,
+                        "minLength": 2
+                    },
+                    "default": [],
+                    "maxItems": 25
+                }
+            },
+            "required": [
+                "awardName",
+                "dateReceived",
+                "description",
+                "image",
+                "organization",
+                "tags"
+            ]
+        },
+        "VolunteerExperience": {
+            "type": "object",
+            "properties": {
+                "role": {
+                    "description": "Role in the volunteer experience",
+                    "title": "Volunteer experience role",
+                    "type": "string",
+                    "maxLength": 150
+                },
+                "organization": {
+                    "description": "Organization that the volunteer experience belongs to",
+                    "title": "Volunteer experience organization",
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/Organization"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null
+                },
+                "location": {
+                    "description": "Location of the volunteer experience",
+                    "title": "Volunteer experience location",
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "default": null,
+                    "maxLength": 150
+                },
+                "startDate": {
+                    "description": "Start date of the volunteer experience",
+                    "title": "Volunteer experience start date",
+                    "default": null,
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "endDate": {
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                    "default": null,
+                    "description": "End date of the volunteer experience",
+                    "title": "Volunteer experience end date"
+                },
+                "description": {
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "default": null,
+                    "description": "Description of the volunteer experience",
+                    "title": "Volunteer experience description",
+                    "maxLength": 1500
+                },
+                "tags": {
+                    "description": "Tags for the volunteer experience",
+                    "title": "Volunteer experience tags",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "maxLength": 100,
+                        "minLength": 2
+                    },
+                    "maxItems": 25
+                }
+            },
+            "required": [
+                "description",
+                "endDate",
+                "location",
+                "organization",
+                "role",
+                "startDate",
+                "tags"
+            ]
+        },
+        "Reference": {
+            "type": "object",
+            "properties": {
+                "issuer": {
+                    "description": "Person or organization that issued the reference",
+                    "title": "Reference issuer",
+                    "$ref": "#/definitions/ReferenceProvider"
+                },
+                "organization": {
+                    "description": "Organization where applicant worked with the issuer",
+                    "title": "Organization",
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/Organization"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description of the reference",
+                    "title": "Reference description",
+                    "maxLength": 2500
+                }
+            },
+            "required": [
+                "description",
+                "email",
+                "issuer",
+                "organization",
+                "phoneNumber"
+            ]
+        },
+        "ReferenceProvider": {
+            "type": "object",
+            "description": "Reference provider",
+            "properties": {
+                "name": {
+                    "description": "Name of the reference provider",
+                    "title": "Reference provider name",
+                    "type": "string",
+                    "maxLength": 150
+                },
+                "url": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "URL of the reference provider",
+                    "title": "Reference provider URL",
+                    "maxLength": 500
+                },
+                "phoneNumber": {
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "default": null,
+                    "description": "Phone number of the issuer",
+                    "title": "Phone number",
+                    "maxLength": 50
+                },
+                "email": {
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "format": "email",
+                    "default": null,
+                    "description": "Email of the issuer",
+                    "title": "Email",
+                    "maxLength": 150
+                }
+            },
+            "required": [
+                "name",
+                "url"
+            ]
+        }
+    },
+    "$schema": "http://json-schema.org/draft-07/schema#"
+}

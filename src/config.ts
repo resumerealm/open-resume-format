@@ -1,0 +1,1 @@
+export const DATE_VERSION_FORMAT = 'YYYY-MM-DD';

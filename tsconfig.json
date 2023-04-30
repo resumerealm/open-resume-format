@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "types": [
+      "vitest/globals",
+      "node"
+    ],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "rootDir": "src",
+    "module": "NodeNext",
+    "outDir": "lib",
+    "moduleResolution": "NodeNext",
+    "baseUrl": "./",
+    "declaration": true,
+    "paths": {
+      "~/*": ["src/*"]
+    }
+  },
+  "include": ["./src"],
+  "exclude": ["node_modules", "lib", "src/**/*.spec.ts", "src/version"]
+}

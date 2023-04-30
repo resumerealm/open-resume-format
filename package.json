@@ -1,0 +1,68 @@
+{
+  "name": "@resumerealm/open-resume-format",
+  "version": "0.0.1",
+  "description": "Open Resume Format (ORF) is a standard based on JSON for representing resume (CV) data",
+  "main": "lib/index.js",
+  "scripts": {
+    "g:versions": "node --experimental-modules scripts/generateVersions.mjs",
+    "g:types": "node --experimental-modules scripts/generateTsTypes.mjs",
+    "g:latest": "node --experimental-modules scripts/generateLatestDir.mjs",
+    "build:all": "npm run g:versions && npm run g:types all && npm run g:latest && npm run build",
+    "prepublish": "npm run build:all",
+    "test": "vitest",
+    "build": "tsc && tsc-alias && npm run cp:versions",
+    "cp:versions": "rm -rf ./lib/version && cp -r ./src/version ./lib/version"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/resumerealm/open-resume-format.git"
+  },
+  "keywords": [
+    "resume",
+    "cv",
+    "resumerealm",
+    "orf",
+    "open resume format",
+    "json-schema",
+    "json",
+    "schema"
+  ],
+  "author": {
+    "email": "dawid@dawiid.io",
+    "name": "Dawid Wojda",
+    "url": "https://dawiid.io/"
+  },
+  "license": "MIT",
+  "types": "lib/index.d.ts",
+  "bugs": {
+    "url": "https://github.com/resumerealm/open-resume-format/issues"
+  },
+  "homepage": "https://github.com/resumerealm/open-resume-format#readme",
+  "devDependencies": {
+    "@types/node": "^18.11.11",
+    "@typescript-eslint/eslint-plugin": "^5.45.1",
+    "@typescript-eslint/parser": "^5.45.1",
+    "eslint": "^8.30.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-sort-imports-es6-autofix": "^0.6.0",
+    "prettier": "2.6.2",
+    "tsc-alias": "^1.8.2",
+    "tslib": "^2.4.0",
+    "typescript": "^4.9.3",
+    "vite": "^4.3.3",
+    "vite-tsconfig-paths": "^4.2.0",
+    "vitest": "^0.25.3",
+    "@dawiidio/pli": "^0.1.4",
+    "tsc": "^2.0.4"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.7",
+    "json-schema-to-typescript": "^12.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

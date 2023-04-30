@@ -1,0 +1,12 @@
+.idea
+node_modules
+.vscode
+dist
+.husky
+yarn-error.log
+yarn.lock
+.env
+.npmrc
+.tmp
+lib
+package-lock.json
